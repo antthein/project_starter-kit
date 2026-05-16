@@ -1,5 +1,17 @@
 # Version History
 
+## v0.2.3 - Claude Model Update (May 16, 2026)
+
+### Updates
+- ✅ **Claude Model** - Updated default Anthropic model to claude-haiku-4-5-20251001
+- ✅ **Model Configuration** - Improved model selection with environment variable support
+
+### Technical
+- Updated lib/ai/providers/anthropic.ts with new default model
+- Maintained backward compatibility with ANTHROPIC_MODEL env var override
+
+---
+
 ## v0.2.2 - AI Provider Improvements & Error Handling (May 16, 2026)
 
 ### Improvements
