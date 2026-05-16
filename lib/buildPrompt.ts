@@ -3,39 +3,62 @@ import { FormData } from "@/types/form";
 const SECTION_FORMAT_RULES = `
 IMPORTANT: Use exactly these section headers (numbered, uppercase) in your response:
 
-1. PROJECT SUMMARY
-2. TECH STACK
+1. WHAT YOU'RE BUILDING
+2. YOUR STACK
 3. FOLDER STRUCTURE
-4. STARTER FILES
-5. SETUP CHECKLIST
+4. KEY FILES
+5. FIRST STEPS
 
 Do not rename or renumber these headers. Put all content for each section directly under its header.
 `;
 
 export function buildPrompt(formData: FormData): string {
-  return `You are an expert software architect. A developer has described their project below.
+  return `You are Bob — a friendly expert who helps people turn project ideas into a clear starting point.
 
-Your job is to generate a complete Project Blueprint with 5 sections:
+Your reader may be technical or non-technical. Write so both can understand.
+Tone: warm, confident, direct. Like a smart friend who happens to be a senior engineer.
+Length: keep every section concise. Clarity beats completeness.
 
-1. PROJECT SUMMARY — Restate the project in 2-3 clear sentences.
+--- IMPORTANT CONTEXT ---
+You are recommending a starting stack, not writing production code.
+Your job is to point people in the right direction — the right tool with the right reasoning.
+If your knowledge of a specific version is slightly behind, that's fine. The recommendation
+still stands. Focus on WHY a tool fits this project, not on pinning exact versions.
+For any tool you recommend, note it as "latest stable" unless you are confident of the version.
 
-2. TECH STACK — Recommend the best stack for this project. For each layer
-   (frontend, backend, database, auth, hosting, etc.), state:
-   - The chosen technology
-   - Why you chose it (1-2 sentences)
-   - One alternative and why you didn't choose it
+--- BLUEPRINT FORMAT ---
+Generate a blueprint in exactly 5 sections:
 
-3. FOLDER STRUCTURE — Show a complete, clean folder tree as a code block.
+## 1. WHAT YOU'RE BUILDING
+2,3 plain-English sentences. What it does, who it's for, how it works at a high level. No jargon.
 
-4. STARTER FILES — Provide content for 3-5 key boilerplate files
-   (package.json or equivalent, README.md, .env.example, entry point, config).
-   Show each as a labeled code block.
+## 2. YOUR STACK
+Only include layers this project actually needs (frontend / backend / database / auth / hosting).
+For each layer, one line:
+  • Layer — Tool — one sentence on why it fits this project.
+Skip layers that aren't needed. One choice only — no alternatives.
 
-5. SETUP CHECKLIST — Step-by-step numbered instructions to get the project
-   running locally from scratch.
+## 3. FOLDER STRUCTURE
+Clean folder tree in a code block. Only include folders and files that matter. No noise.
 
-Be opinionated. Don't hedge. Pick the best option and explain why.
-Avoid overengineering for the given team size and timeline.
+## 4. KEY FILES
+Show content for 2 files only: package.json (or equivalent) and .env.example.
+In package.json, use "latest" for all dependency versions rather than guessing specific numbers.
+Keep them minimal — just enough to start. No full implementation code.
+
+## 5. FIRST STEPS
+Exactly 6 numbered steps to go from zero to running locally.
+Plain English for each step. Terminal command on the line after if needed.
+Last step should be: open the app and confirm it works.
+
+---
+
+Rules:
+• Be decisive. Pick one option per layer. Don't say "it depends."
+• If the project is simple, the blueprint should be simple.
+• Match recommendations to the team size and timeline provided.
+• Never pad. If a section needs 2 sentences, write 2 sentences.
+• Version honesty: if unsure of the exact version, say "latest stable" — never guess a number.
 ${SECTION_FORMAT_RULES}
 
 --- PROJECT INPUTS ---
@@ -83,15 +106,21 @@ export function parseBlueprint(rawResponse: string): ParsedBlueprint {
   };
 
   sections.summary = extractSection(rawResponse, [
+    /1\.\s*WHAT YOU'RE BUILDING[^\n]*\n+([\s\S]*?)(?=\n\s*2\.|$)/i,
+    /##\s*1?\.?\s*WHAT YOU'RE BUILDING[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
+    /#\s*WHAT YOU'RE BUILDING[^\n]*\n+([\s\S]*?)(?=\n#\s*|$)/i,
+    // Fallback to old names for backward compatibility
     /1\.\s*PROJECT SUMMARY[^\n]*\n+([\s\S]*?)(?=\n\s*2\.|$)/i,
     /##\s*1?\.?\s*PROJECT SUMMARY[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
-    /#\s*PROJECT SUMMARY[^\n]*\n+([\s\S]*?)(?=\n#\s*|$)/i,
   ]);
 
   sections.techStack = extractSection(rawResponse, [
+    /2\.\s*YOUR STACK[^\n]*\n+([\s\S]*?)(?=\n\s*3\.|$)/i,
+    /##\s*2?\.?\s*YOUR STACK[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
+    /#\s*YOUR STACK[^\n]*\n+([\s\S]*?)(?=\n#\s*|$)/i,
+    // Fallback to old names
     /2\.\s*TECH STACK[^\n]*\n+([\s\S]*?)(?=\n\s*3\.|$)/i,
     /##\s*2?\.?\s*TECH STACK[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
-    /#\s*TECH STACK[^\n]*\n+([\s\S]*?)(?=\n#\s*|$)/i,
   ]);
 
   sections.folderStructure = extractSection(rawResponse, [
@@ -101,15 +130,21 @@ export function parseBlueprint(rawResponse: string): ParsedBlueprint {
   ]);
 
   sections.starterFiles = extractSection(rawResponse, [
+    /4\.\s*KEY FILES[^\n]*\n+([\s\S]*?)(?=\n\s*5\.|$)/i,
+    /##\s*4?\.?\s*KEY FILES[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
+    /#\s*KEY FILES[^\n]*\n+([\s\S]*?)(?=\n#\s*|$)/i,
+    // Fallback to old names
     /4\.\s*STARTER FILES[^\n]*\n+([\s\S]*?)(?=\n\s*5\.|$)/i,
     /##\s*4?\.?\s*STARTER FILES[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
-    /#\s*STARTER FILES[^\n]*\n+([\s\S]*?)(?=\n#\s*|$)/i,
   ]);
 
   sections.setupChecklist = extractSection(rawResponse, [
+    /5\.\s*FIRST STEPS[^\n]*\n+([\s\S]*?)$/i,
+    /##\s*5?\.?\s*FIRST STEPS[^\n]*\n+([\s\S]*?)$/i,
+    /#\s*FIRST STEPS[^\n]*\n+([\s\S]*?)$/i,
+    // Fallback to old names
     /5\.\s*SETUP CHECKLIST[^\n]*\n+([\s\S]*?)$/i,
     /##\s*5?\.?\s*SETUP CHECKLIST[^\n]*\n+([\s\S]*?)$/i,
-    /#\s*SETUP CHECKLIST[^\n]*\n+([\s\S]*?)$/i,
   ]);
 
   const hasParsedSections =
