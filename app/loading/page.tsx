@@ -32,13 +32,12 @@ export default function LoadingPage() {
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
-          const detail =
-            typeof errorData.details === "string"
-              ? `: ${errorData.details}`
-              : "";
-          throw new Error(
-            (errorData.error || "Failed to generate blueprint") + detail
-          );
+          const parts = [
+            errorData.error || "Failed to generate blueprint",
+            errorData.hint,
+            errorData.details,
+          ].filter(Boolean);
+          throw new Error(parts.join(" — "));
         }
 
         const result = await response.json();

@@ -1,5 +1,22 @@
 # Version History
 
+## v0.2.2 - AI Provider Improvements & Error Handling (May 16, 2026)
+
+### Improvements
+- ✅ **Enhanced Error Messages** - Better error hints for API configuration issues
+- ✅ **Improved AI Provider Detection** - Auto-detect Anthropic, OpenAI, or watsonx from env vars
+- ✅ **Better Error Handling** - More informative error messages in loading page
+- ✅ **Model Configuration** - Support for custom Anthropic models via ANTHROPIC_MODEL env var
+- ✅ **Personal Touch** - Added signature "ah" in top right corner
+
+### Technical
+- Updated error handling in API route with specific hints for common issues
+- Improved AI provider auto-detection logic in lib/ai/types.ts
+- Enhanced Anthropic provider with configurable model and max tokens
+- Better error display in loading page with detailed messages
+
+---
+
 ## v0.2.1 - Final Polish & GitHub Release (May 16, 2026)
 
 ### Updates

@@ -6,6 +6,7 @@ export async function generateWithAnthropic(prompt: string): Promise<string> {
 
   const model =
     process.env.ANTHROPIC_MODEL?.trim() || "claude-sonnet-4-20250514";
+  const maxTokens = Number(process.env.ANTHROPIC_MAX_TOKENS) || 2500;
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -16,7 +17,7 @@ export async function generateWithAnthropic(prompt: string): Promise<string> {
     },
     body: JSON.stringify({
       model,
-      max_tokens: 4000,
+      max_tokens: maxTokens,
       messages: [{ role: "user", content: prompt }],
     }),
   });
