@@ -61,8 +61,8 @@ export default function FormPage() {
   ];
 
   return (
-    <main className="min-h-screen py-16 md:py-24 px-8 md:px-16 bg-background">
-      <div className="max-w-[680px] mx-auto">
+    <main className="min-h-screen py-16 md:py-24 px-8 md:px-16">
+      <div className="max-w-[840px] mx-auto bg-background p-12 md:p-20 rounded-[12px]">
         {/* Back Button */}
         <button
           onClick={() => router.push("/")}

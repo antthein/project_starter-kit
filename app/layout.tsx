@@ -34,8 +34,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`h-full ${dmMono.variable} ${dmSerif.variable}`}
+      suppressHydrationWarning
     >
-      <body className={`min-h-full antialiased ${dmMono.className}`}>
+      <body
+        className={`grid-bg min-h-full antialiased ${dmMono.className}`}
+        suppressHydrationWarning
+      >
         <FormProvider>{children}</FormProvider>
       </body>
     </html>

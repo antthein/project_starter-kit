@@ -67,7 +67,6 @@
 
   body {
     min-height: 100%;
-    background: var(--background);
     color: var(--text-primary);
     font-size: 16px;
     line-height: 1.6;
@@ -105,6 +104,16 @@
   50% {
     opacity: 0.5;
   }
+}
+
+/* Blueprint grid — use on body so it shows on every page */
+.grid-bg {
+  background-color: #0a0a0a;
+  background-image:
+    linear-gradient(to right, #1f1f1f 1px, transparent 1px),
+    linear-gradient(to bottom, #1f1f1f 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: 0 0;
 }
 
 .animate-fade-in {

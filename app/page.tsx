@@ -5,7 +5,7 @@ import { VERSION } from "@/lib/version";
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen flex flex-col bg-background">
+    <main className="min-h-screen flex flex-col">
       {/* Wordmark - Top Left */}
       <div className="absolute top-8 left-8 md:top-12 md:left-12">
         <span className="font-mono text-xs text-text-tertiary tracking-[0.2em] uppercase">
