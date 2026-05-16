@@ -13,6 +13,13 @@ export default function LandingPage() {
         </span>
       </div>
 
+      {/* Signature - Top Right */}
+      <div className="absolute top-8 right-8 md:top-12 md:right-12">
+        <span className="font-mono text-xs text-text-tertiary tracking-[0.2em] lowercase">
+          ah
+        </span>
+      </div>
+
       {/* Center Content */}
       <div className="flex-1 flex items-center justify-center px-8 md:px-16">
         <div className="max-w-[640px] w-full text-center">
