@@ -52,7 +52,7 @@ export interface FormData {
   preferences?: string;
 }
 
-// Blueprint response structure from IBM Bob
+// Blueprint response structure returned by the configured AI engine
 export interface BlueprintResponse {
   summary: string;
   techStack: string;

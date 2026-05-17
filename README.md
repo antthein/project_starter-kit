@@ -2,7 +2,7 @@
 
 **Version:** v0.2.0 | **Tagline:** "Describe your idea. Bob builds the blueprint."
 
-A Next.js web application for the IBM Bob Hackathon (May 2026) that helps developers overcome "blank screen paralysis" by generating complete project blueprints using IBM Bob AI.
+A Next.js web application built with **IBM Bob** for the IBM Bob Hackathon (May 2026). Bob (the IDE coding partner) wrote the components, design system, and parsing logic. At runtime, a pluggable AI layer (watsonx, Anthropic, or OpenAI) generates a complete project blueprint from a 7-question form — helping developers overcome "blank screen paralysis."
 
 > See [QUICKSTART.md](QUICKSTART.md) to run locally, [DEPLOYMENT.md](DEPLOYMENT.md) for Vercel, and [VERSION_HISTORY.md](VERSION_HISTORY.md) for changelog.
 
@@ -12,7 +12,7 @@ Every developer knows the blank-screen moment — you have an idea but don't kno
 
 **Project Kickstarter** solves this by:
 1. Asking you 7 simple questions about your project
-2. Sending your inputs to IBM Bob
+2. Sending your inputs to the configured AI engine (watsonx, Anthropic, or OpenAI)
 3. Generating a complete, opinionated project blueprint with:
    - Tech stack recommendations with reasoning
    - Complete folder structure
@@ -24,7 +24,7 @@ Every developer knows the blank-screen moment — you have an idea but don't kno
 ### Prerequisites
 
 - Node.js 18+ and npm
-- IBM Bob API key (from the hackathon dashboard)
+- An API key for your chosen AI provider — watsonx.ai (IBM Cloud), Anthropic, or OpenAI. Or run in `demo` mode with no key.
 
 ### Installation
 
@@ -43,7 +43,7 @@ Every developer knows the blank-screen moment — you have an idea but don't kno
    WATSONX_URL=https://us-south.ml.cloud.ibm.com
    ```
    
-   **Note:** IBM Bob is the IDE dev partner (build with Bob). Live generation uses `AI_PROVIDER` in `.env.local` (`watsonx`, `openai`, `anthropic`, or `demo`). See [ENV.md](ENV.md).
+   **Note:** IBM Bob is the **IDE coding partner** that built this app — not a runtime API. Live blueprint generation uses whatever provider you set in `AI_PROVIDER` (`watsonx`, `openai`, `anthropic`, or `demo`). See [ENV.md](ENV.md) for full setup.
 
    **Quick fallback while watsonx access is pending:**
    ```env
@@ -66,7 +66,8 @@ Every developer knows the blank-screen moment — you have an idea but don't kno
 | Framework | Next.js 16 | App Router, API routes, easy Vercel deploy |
 | Styling | Tailwind CSS v4 | Fast UI building, inline theme configuration |
 | Language | TypeScript 5.0+ | Type safety, better DX |
-| AI Engine | IBM Bob API | Core engine for blueprint generation |
+| AI Engine | Pluggable (watsonx / Anthropic / OpenAI) | Runtime blueprint generation; chosen per env var |
+| Build Partner | IBM Bob | Wrote the components, design system, and parsing logic |
 | Hosting | Vercel | Made for Next.js, one-click deploy |
 
 ## 📁 Project Structure
@@ -83,7 +84,7 @@ project-starter-kit/
 │   │   └── page.tsx              # Blueprint output (5 sections)
 │   ├── api/
 │   │   └── generate/
-│   │       └── route.ts          # Bob API integration (server-side)
+│   │       └── route.ts          # AI provider integration (server-side)
 │   ├── layout.tsx                # Root layout with FormProvider
 │   └── globals.css               # Global styles & theme
 ├── components/
@@ -144,17 +145,21 @@ Copy markdown  /  Download README.md  /  Start over
    - Weekend hack / A few weeks / Several months / Long-term
 7. **Any preferences or constraints?** (Optional, text input)
 
-## 🤖 IBM Bob Integration
+## 🤖 How Bob Powers This
 
-The app sends a carefully crafted prompt to IBM Bob that instructs it to generate:
+**Build time — Bob (the IBM IDE coding partner)**
+Bob wrote the components, the design tokens in `globals.css`, the parsing logic in `lib/buildPrompt.ts`, the multi-provider abstraction in `lib/ai/`, and most of the page layouts. Every commit in this repo was paired with Bob.
 
-1. **Project Summary** — 2-3 clear sentences
-2. **Tech Stack** — Recommendations with reasoning and alternatives
+**Run time — Pluggable AI engine**
+When a user submits the form, the app calls `/api/generate`, which routes the prompt to whichever LLM is configured via `AI_PROVIDER` (`watsonx` | `anthropic` | `openai` | `demo`). The engine returns a 5-section blueprint:
+
+1. **What You're Building** — 2-3 clear sentences
+2. **Your Stack** — One opinionated choice per layer with reasoning
 3. **Folder Structure** — Complete folder tree
-4. **Starter Files** — 3-5 boilerplate files with content
-5. **Setup Checklist** — Step-by-step local setup instructions
+4. **Key Files** — `package.json` + `.env.example` content
+5. **First Steps** — 6 numbered steps to get running locally
 
-The prompt is opinionated and asks Bob to avoid overengineering based on team size and timeline.
+The prompt is opinionated and asks the model to avoid overengineering based on team size and timeline. Swap providers by changing one env var — no code change required.
 
 ## 🚢 Deployment
 
@@ -162,13 +167,14 @@ The prompt is opinionated and asks Bob to avoid overengineering based on team si
 
 1. Push your code to GitHub
 2. Import the project in Vercel
-3. Add environment variables:
-   - `WATSONX_API_KEY`
-   - `WATSONX_PROJECT_ID`
-   - `WATSONX_URL` (optional, default `us-south`)
+3. Add environment variables for your chosen provider:
+   - **Anthropic:** `AI_PROVIDER=anthropic` + `ANTHROPIC_API_KEY`
+   - **OpenAI:** `AI_PROVIDER=openai` + `OPENAI_API_KEY`
+   - **watsonx:** `AI_PROVIDER=watsonx` + `WATSONX_API_KEY` + `WATSONX_PROJECT_ID` + `WATSONX_URL`
+   - **Demo (no key):** `AI_PROVIDER=demo`
 4. Deploy!
 
-Vercel will automatically detect Next.js and configure everything.
+Vercel will automatically detect Next.js and configure everything. See [ENV.md](ENV.md) for the full env reference.
 
 ## 🧪 Development
 
@@ -202,7 +208,7 @@ npm run lint
 
 | Criterion | How This Project Addresses It |
 |-----------|-------------------------------|
-| Meaningful IBM Bob use | Bob is the entire engine — remove it and the app has nothing |
+| Meaningful IBM Bob use | Bob built every layer — components, design system, parser, AI abstraction. Remove Bob from the build process and this app does not exist. |
 | Speeds the way you work | Eliminates blank-screen paralysis — the #1 daily dev pain |
 | Any skill level | Junior gets expert decisions. Senior skips the boilerplate. |
 | High-quality software delivery | Every output includes structure, docs, and setup guide |

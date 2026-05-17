@@ -4,7 +4,7 @@
 
 Before deploying, ensure you have:
 
-- ✅ IBM Bob API key from the hackathon dashboard
+- ✅ An API key for your chosen AI provider — watsonx.ai (IBM Cloud), Anthropic, or OpenAI. Or skip the key and run in `demo` mode.
 - ✅ GitHub account
 - ✅ Vercel account (free tier works)
 
@@ -37,15 +37,18 @@ Do **not** commit `.env.local` — it is ignored by `.gitignore`.
 
 ### 3. Configure Environment Variables
 
-In **Project Settings → Environment Variables**, add:
+In **Project Settings → Environment Variables**, add the vars for your chosen provider.
 
-| Name | Value | Environments |
-|------|--------|--------------|
-| `WATSONX_API_KEY` | IBM Cloud API key | Production, Preview, Development |
-| `WATSONX_PROJECT_ID` | watsonx.ai project ID | Production, Preview, Development |
-| `WATSONX_URL` | e.g. `https://us-south.ml.cloud.ibm.com` | Production, Preview, Development |
+**Pick one of:**
 
-Optional: `WATSONX_MODEL_ID`, `WATSONX_API_VERSION`. Redeploy after changing variables.
+| Provider | Required vars |
+|---|---|
+| Anthropic | `AI_PROVIDER=anthropic`, `ANTHROPIC_API_KEY`, optional `ANTHROPIC_MODEL` |
+| OpenAI | `AI_PROVIDER=openai`, `OPENAI_API_KEY`, optional `OPENAI_MODEL`, `OPENAI_BASE_URL` |
+| watsonx.ai | `AI_PROVIDER=watsonx`, `WATSONX_API_KEY`, `WATSONX_PROJECT_ID`, `WATSONX_URL`, optional `WATSONX_MODEL_ID` |
+| Demo (no key) | `AI_PROVIDER=demo` |
+
+Set scope to **Production, Preview, Development**. Redeploy after changing variables.
 
 ### 4. Deploy
 
@@ -81,24 +84,23 @@ If generation fails only in production:
 
 ### Preview deployments
 
-Each pull request gets a preview URL. Use the same `BOB_API_KEY` and `BOB_API_URL` unless you have separate keys per environment.
+Each pull request gets a preview URL. Use the same provider env vars as Production unless you have separate keys per environment.
 
 ### Local vs production
 
 | Concern | Local | Vercel |
 |---------|--------|--------|
-| API key | `.env.local` | `WATSONX_API_KEY` |
-| Project ID | `.env.local` | `WATSONX_PROJECT_ID` |
-| ML base URL | `.env.local` | `WATSONX_URL` |
+| AI provider | `AI_PROVIDER` in `.env.local` | `AI_PROVIDER` env var |
+| API key(s) | `.env.local` | Provider-specific env vars (see table above) |
 | Blueprint persistence | `sessionStorage` | Same (per browser tab) |
 
 ---
 
 ## Security Checklist
 
-- [ ] `BOB_API_KEY` is only in server env (never `NEXT_PUBLIC_*`)
+- [ ] Provider API keys are only in server env (never prefixed with `NEXT_PUBLIC_*`)
 - [ ] `.env.local` is not committed
-- [ ] API route does not return stack traces in production
+- [ ] API route does not return stack traces in production (already enforced in `route.ts`)
 
 ---
 
