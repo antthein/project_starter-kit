@@ -76,46 +76,6 @@ export default function BlueprintPage() {
     URL.revokeObjectURL(url);
   };
 
-  const handleBuildInVSCode = async () => {
-    try {
-      // First, copy the blueprint to clipboard
-      await navigator.clipboard.writeText(blueprint.rawResponse);
-      
-      // Create a temporary file and download it
-      const blob = new Blob([blueprint.rawResponse], { type: "text/markdown" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "project-blueprint.md";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      
-      // Wait a moment for the download to start
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // Try to open VS Code
-      // User will need to open the downloaded file in VS Code
-      const vscodeUrl = "vscode://";
-      window.location.href = vscodeUrl;
-      
-      // Show success message
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    } catch (err) {
-      console.error("Failed to build in VS Code:", err);
-      // Fallback: just copy to clipboard
-      try {
-        await navigator.clipboard.writeText(blueprint.rawResponse);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      } catch (copyErr) {
-        console.error("Failed to copy:", copyErr);
-      }
-    }
-  };
-
   const handleStartOver = () => {
     resetForm();
     router.push("/");
@@ -142,7 +102,7 @@ export default function BlueprintPage() {
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-3 mb-12 animate-fade-in" style={{ animationDelay: "100ms" }}>
           <button
-            onClick={handleBuildInVSCode}
+            onClick={handleDownload}
             className="px-4 py-2.5 bg-accent text-background border border-accent rounded-[6px] font-mono text-[15px] font-medium hover:bg-accent-hover hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 shadow-sm"
           >
             🚀 Build from Blueprint
@@ -152,12 +112,6 @@ export default function BlueprintPage() {
             className="px-4 py-2.5 bg-surface border border-border rounded-[6px] text-text-primary font-mono text-[15px] hover:border-border-hover hover:scale-[1.02] active:scale-[0.98] transition-all duration-150"
           >
             {copied ? "✓ Copied!" : "Copy full blueprint"}
-          </button>
-          <button
-            onClick={handleDownload}
-            className="px-4 py-2.5 bg-surface border border-border rounded-[6px] text-text-primary font-mono text-[15px] hover:border-border-hover hover:scale-[1.02] active:scale-[0.98] transition-all duration-150"
-          >
-            Download blueprint (.md)
           </button>
           <button
             onClick={handleStartOver}

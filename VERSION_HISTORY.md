@@ -1,5 +1,19 @@
 # Version History
 
+## v0.2.5 - UI Simplification (May 17, 2026)
+
+### Changes
+- ✅ **Simplified Button Layout** - Removed redundant "Build from Blueprint" button with VS Code integration
+- ✅ **Updated Download Button** - Changed "Download blueprint (.md)" to "🚀 Build from Blueprint" with accent styling
+- ✅ **Cleaner UX** - Streamlined action buttons to focus on core functionality (download, copy, start over)
+
+### Technical
+- Removed `handleBuildInVSCode` function from blueprint page
+- Updated download button to use primary accent styling (bg-accent)
+- Maintained download functionality while improving visual hierarchy
+
+---
+
 ## v0.2.4 - Blueprint Parsing Fix (May 17, 2026)
 
 ### Bug Fixes
