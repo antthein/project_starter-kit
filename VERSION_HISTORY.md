@@ -1,5 +1,24 @@
 # Version History
 
+## v0.2.7 - Build from Blueprint Enhancement & .env.example (May 17, 2026)
+
+### New Features
+- ✅ **VS Code Integration** - "Build from Blueprint" button now downloads file AND attempts to open VS Code
+- ✅ **.env.example File** - Added comprehensive environment variable template with all provider options
+- ✅ **Better Developer Experience** - Users can see all available env vars without exposing real API keys
+
+### Changes
+- Updated download handler to be async and trigger VS Code protocol (`vscode://`)
+- Created `.env.example` with placeholders for watsonx, Anthropic, OpenAI, and demo mode
+- Added helpful comments in `.env.example` for each provider configuration
+
+### Technical
+- Modified `handleDownload` in blueprint page to open VS Code after download
+- Added 500ms delay between download and VS Code trigger for better UX
+- Graceful fallback if VS Code protocol is not available
+
+---
+
 ## v0.2.6 - Start Over Confirmation Modal (May 17, 2026)
 
 ### New Features

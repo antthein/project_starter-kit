@@ -65,7 +65,8 @@ export default function BlueprintPage() {
     }
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
+    // Download the blueprint file
     const blob = new Blob([blueprint.rawResponse], { type: "text/markdown" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -75,6 +76,16 @@ export default function BlueprintPage() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+
+    // Wait a moment for download to start
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Try to open VS Code (will only work if VS Code is installed and protocol handler is registered)
+    try {
+      window.location.href = "vscode://";
+    } catch (err) {
+      console.log("VS Code protocol not available:", err);
+    }
   };
 
   const handleStartOverClick = () => {
