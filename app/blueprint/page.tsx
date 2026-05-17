@@ -65,8 +65,7 @@ export default function BlueprintPage() {
     }
   };
 
-  const handleDownload = async () => {
-    // Download the blueprint file
+  const handleDownload = () => {
     const blob = new Blob([blueprint.rawResponse], { type: "text/markdown" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -76,16 +75,6 @@ export default function BlueprintPage() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-
-    // Wait a moment for download to start
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    // Try to open VS Code (will only work if VS Code is installed and protocol handler is registered)
-    try {
-      window.location.href = "vscode://";
-    } catch (err) {
-      console.log("VS Code protocol not available:", err);
-    }
   };
 
   const handleStartOverClick = () => {
@@ -153,7 +142,7 @@ export default function BlueprintPage() {
             onClick={handleDownload}
             className="px-4 py-2.5 bg-accent text-background border border-accent rounded-[6px] font-mono text-[15px] font-medium hover:bg-accent-hover hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 shadow-sm"
           >
-            🚀 Build from Blueprint
+            Download blueprint (.md)
           </button>
           <button
             onClick={handleCopyAll}
