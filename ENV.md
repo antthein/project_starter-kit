@@ -28,7 +28,7 @@ OPENAI_MODEL=gpt-4o-mini
 ```env
 AI_PROVIDER=anthropic
 ANTHROPIC_API_KEY=sk-ant-...
-ANTHROPIC_MODEL=claude-sonnet-4-20250514
+ANTHROPIC_MODEL=claude-haiku-4-5-20251001
 ```
 
 ### IBM watsonx.ai (hackathon / IBM stack)

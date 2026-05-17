@@ -58,7 +58,7 @@ function getErrorHint(message: string): string | undefined {
     return "Invalid Anthropic API key. Create a new key at console.anthropic.com and update Vercel env vars.";
   }
   if (message.includes("Anthropic 404") || message.includes("model")) {
-    return "Wrong ANTHROPIC_MODEL. Try claude-sonnet-4-20250514 or claude-3-5-haiku-20241022 in Vercel env.";
+    return "Wrong ANTHROPIC_MODEL. Try claude-haiku-4-5-20251001 or claude-3-5-haiku-20241022 in Vercel env.";
   }
   return undefined;
 }

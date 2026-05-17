@@ -5,7 +5,7 @@ export async function generateWithAnthropic(prompt: string): Promise<string> {
   }
 
   const model =
-    process.env.ANTHROPIC_MODEL?.trim() || "claude-sonnet-4-20250514";
+    process.env.ANTHROPIC_MODEL?.trim() || "claude-haiku-4-5-20251001";
   const maxTokens = Number(process.env.ANTHROPIC_MAX_TOKENS) || 2500;
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
