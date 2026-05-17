@@ -106,36 +106,36 @@ export function parseBlueprint(rawResponse: string): ParsedBlueprint {
   };
 
   sections.summary = extractSection(rawResponse, [
-    /1\.\s*WHAT YOU'RE BUILDING[^\n]*\n+([\s\S]*?)(?=\n\s*2\.|$)/i,
-    /##\s*1?\.?\s*WHAT YOU'RE BUILDING[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
-    /#\s*WHAT YOU'RE BUILDING[^\n]*\n+([\s\S]*?)(?=\n#\s*|$)/i,
+    /1\.\s*WHAT YOU'RE BUILDING[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*2\.|$)/i,
+    /##\s*1?\.?\s*WHAT YOU'RE BUILDING[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*2|$)/i,
+    /#\s*WHAT YOU'RE BUILDING[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*[2-5]|$)/i,
     // Fallback to old names for backward compatibility
-    /1\.\s*PROJECT SUMMARY[^\n]*\n+([\s\S]*?)(?=\n\s*2\.|$)/i,
-    /##\s*1?\.?\s*PROJECT SUMMARY[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
+    /1\.\s*PROJECT SUMMARY[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*2\.|$)/i,
+    /##\s*1?\.?\s*PROJECT SUMMARY[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*2|$)/i,
   ]);
 
   sections.techStack = extractSection(rawResponse, [
-    /2\.\s*YOUR STACK[^\n]*\n+([\s\S]*?)(?=\n\s*3\.|$)/i,
-    /##\s*2?\.?\s*YOUR STACK[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
-    /#\s*YOUR STACK[^\n]*\n+([\s\S]*?)(?=\n#\s*|$)/i,
+    /2\.\s*YOUR STACK[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*3\.|$)/i,
+    /##\s*2?\.?\s*YOUR STACK[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*3|$)/i,
+    /#\s*YOUR STACK[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*[3-5]|$)/i,
     // Fallback to old names
-    /2\.\s*TECH STACK[^\n]*\n+([\s\S]*?)(?=\n\s*3\.|$)/i,
-    /##\s*2?\.?\s*TECH STACK[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
+    /2\.\s*TECH STACK[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*3\.|$)/i,
+    /##\s*2?\.?\s*TECH STACK[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*3|$)/i,
   ]);
 
   sections.folderStructure = extractSection(rawResponse, [
-    /3\.\s*FOLDER STRUCTURE[^\n]*\n+([\s\S]*?)(?=\n\s*4\.|$)/i,
-    /##\s*3?\.?\s*FOLDER STRUCTURE[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
-    /#\s*FOLDER STRUCTURE[^\n]*\n+([\s\S]*?)(?=\n#\s*|$)/i,
+    /3\.\s*FOLDER STRUCTURE[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*4\.|$)/i,
+    /##\s*3?\.?\s*FOLDER STRUCTURE[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*4|$)/i,
+    /#\s*FOLDER STRUCTURE[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*[4-5]|$)/i,
   ]);
 
   sections.starterFiles = extractSection(rawResponse, [
-    /4\.\s*KEY FILES[^\n]*\n+([\s\S]*?)(?=\n\s*5\.|$)/i,
-    /##\s*4?\.?\s*KEY FILES[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
-    /#\s*KEY FILES[^\n]*\n+([\s\S]*?)(?=\n#\s*|$)/i,
+    /4\.\s*KEY FILES[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*5\.|$)/i,
+    /##\s*4?\.?\s*KEY FILES[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*5|$)/i,
+    /#\s*KEY FILES[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*5|$)/i,
     // Fallback to old names
-    /4\.\s*STARTER FILES[^\n]*\n+([\s\S]*?)(?=\n\s*5\.|$)/i,
-    /##\s*4?\.?\s*STARTER FILES[^\n]*\n+([\s\S]*?)(?=\n##\s*|$)/i,
+    /4\.\s*STARTER FILES[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*5\.|$)/i,
+    /##\s*4?\.?\s*STARTER FILES[^\n]*\n+([\s\S]*?)(?=\n\s*#{1,2}\s*5|$)/i,
   ]);
 
   sections.setupChecklist = extractSection(rawResponse, [

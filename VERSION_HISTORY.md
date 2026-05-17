@@ -1,5 +1,19 @@
 # Version History
 
+## v0.2.4 - Blueprint Parsing Fix (May 17, 2026)
+
+### Bug Fixes
+- 🐛 **Fixed Section Overlap** - Resolved issue where blueprint sections were showing repetitive content
+- ✅ **Improved Regex Patterns** - Enhanced section parsing to properly detect markdown headers with # symbols
+- ✅ **Better Content Separation** - Each section now displays only its intended content without overlap
+
+### Technical
+- Updated regex patterns in `parseBlueprint` function to use `#{1,2}` for proper markdown header detection
+- Fixed lookahead patterns to prevent content bleeding between sections
+- Improved section boundary detection for both numbered and markdown-style headers
+
+---
+
 ## v0.2.3 - Claude Model Update (May 16, 2026)
 
 ### Updates
