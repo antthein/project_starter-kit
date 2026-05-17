@@ -9,7 +9,7 @@ export default function LandingPage() {
       {/* Wordmark - Top Left */}
       <div className="absolute top-8 left-8 md:top-12 md:left-12">
         <span className="font-mono text-xs text-text-tertiary tracking-[0.2em] uppercase">
-          Bob
+          project starter-kit
         </span>
       </div>
 
