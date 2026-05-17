@@ -1,5 +1,26 @@
 # Version History
 
+## v0.2.6 - Start Over Confirmation Modal (May 17, 2026)
+
+### New Features
+- ✅ **Confirmation Modal** - Added "Are you sure?" confirmation dialog when clicking "Start over"
+- ✅ **Improved Button Layout** - Moved "Start over" button to the right side with `ml-auto`
+- ✅ **Better UX** - Prevents accidental data loss with confirmation step
+
+### UI Changes
+- Modal with backdrop blur matching current design system
+- Two-button confirmation: "Yes, start over" (accent) and "Cancel" (surface)
+- Modal appears for both "Start over" button and "Create another project" link
+- Smooth fade-in animation for modal appearance
+
+### Technical
+- Added `showConfirmModal` state management
+- Created inline confirmation modal component
+- Updated both "Start over" triggers to use confirmation flow
+- Modal uses existing design tokens (border, surface, accent colors)
+
+---
+
 ## v0.2.5 - UI Simplification (May 17, 2026)
 
 ### Changes
