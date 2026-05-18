@@ -1,10 +1,10 @@
 # Project Kickstarter
 
-**Version:** v0.2.0 | **Tagline:** "Describe your idea. Bob builds the blueprint."
+**Version:** v0.2.7 | **Tagline:** "Describe your idea. Bob builds the blueprint."
 
 A Next.js web application built with **IBM Bob** for the IBM Bob Hackathon (May 2026). Bob (the IDE coding partner) wrote the components, design system, and parsing logic. At runtime, a pluggable AI layer (watsonx, Anthropic, or OpenAI) generates a complete project blueprint from a 7-question form — helping developers overcome "blank screen paralysis."
 
-> See [QUICKSTART.md](QUICKSTART.md) to run locally, [DEPLOYMENT.md](DEPLOYMENT.md) for Vercel, and [VERSION_HISTORY.md](VERSION_HISTORY.md) for changelog.
+> See [DOCUMENTATION.md](DOCUMENTATION.md) for the full doc hub (architecture, API, modules). [QUICKSTART.md](QUICKSTART.md) to run locally, [DEPLOYMENT.md](DEPLOYMENT.md) for Vercel, and [VERSION_HISTORY.md](VERSION_HISTORY.md) for changelog.
 
 ## 🎯 What It Does
 
